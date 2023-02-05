@@ -1,16 +1,45 @@
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
+import { arrayItems as optionArray } from '../AiOptions'
 import '../App.css';
-import Textarea from '@mui/joy/Textarea';
-import Button from '@mui/joy/Button';
+const { Configuration, OpenAIApi } = require("openai");
+
 function Task() {
+
     const [input, setInput] = useState();
+    const [result, setResult] = useState();
+
     const { id } = useParams()
-    // console.log(id)
-    const handleClick = () => {
+    // console.log(optionArray[id])
+    const configuration = new Configuration({
+        apiKey: "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"
+    });
+    const openai = new OpenAIApi(configuration);
+
+    // console.log(optionArray[id])
+    const handleClick = async () => {
+        let option = {
+
+                model: "text-davinci-003",
+                prompt: `${optionArray[id].description} ${input}.`,
+                temperature: 0,
+                max_tokens: 60,
+                top_p: 1.0,
+                frequency_penalty: 0.0,
+                presence_penalty: 0.0,
+
+        }
+        let object = { ...option}
+        const response = await openai.createCompletion(object);
+      
+        console.log(response)
+        console.log(object)
         console.log(input)
+
     }
 
+
+    //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
 
 
 

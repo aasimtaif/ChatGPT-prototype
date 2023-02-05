@@ -8,14 +8,14 @@ function Options() {
         <div><h1 className="heading">ChatGPT Clone</h1>
 
             <div className="grid-main">
-                {arrayItems.map((item) => {
+                {arrayItems.map((item,index) => {
                     return (
                         
                         <div
                             className="grid-child"
                             onClick={()=>{
-                                console.log(item.id)
-                                navigate(`/tasks/${item.id}`);
+                                console.log(index)
+                                navigate(`/tasks/${index}`);
 
                             }}
                             key = {item.id}
