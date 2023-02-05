@@ -7,7 +7,8 @@ const { Configuration, OpenAIApi } = require("openai");
 function Task() {
 
     const [input, setInput] = useState();
-    const [result, setResult] = useState();
+    const [result, setResult] = useState("");
+    const [loading, setloading] = useState()
 
     const { id } = useParams()
     // console.log(optionArray[id])
@@ -18,23 +19,26 @@ function Task() {
 
     // console.log(optionArray[id])
     const handleClick = async () => {
-        let option = {
-
-                model: "text-davinci-003",
-                prompt: `${optionArray[id].description} ${input}.`,
-                temperature: 0,
-                max_tokens: 60,
-                top_p: 1.0,
-                frequency_penalty: 0.0,
-                presence_penalty: 0.0,
+        setloading(true)
+        let object = {
+            model: "text-davinci-003",
+            prompt: `${optionArray[id].description} ${input}.`,
+            temperature: 0,
+            max_tokens: 60,
+            top_p: 1.0,
+            frequency_penalty: 0.0,
+            presence_penalty: 0.0,
 
         }
-        let object = { ...option}
         const response = await openai.createCompletion(object);
-      
+
+        setResult(response.data.choices[0].text)
         console.log(response)
         console.log(object)
         console.log(input)
+        setloading(false)
+        console.log(result)
+
 
     }
 
@@ -59,7 +63,7 @@ function Task() {
                 DO YOU STUFF!
             </button>
             <div className='result'>
-                <h3 className="result-text">result</h3>
+                <h3 className="result-text">{loading ? <>loading....</>:<>{result}</>}</h3>
             </div>
         </div>
     )
