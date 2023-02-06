@@ -13,7 +13,7 @@ function Task() {
     const { id } = useParams()
     // console.log(optionArray[id])
     const configuration = new Configuration({
-        apiKey: "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"
+        apiKey: "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",
     });
     const openai = new OpenAIApi(configuration);
 
@@ -24,7 +24,7 @@ function Task() {
             model: "text-davinci-003",
             prompt: `${optionArray[id].description} ${input}.`,
             temperature: 0,
-            max_tokens: 60,
+            max_tokens: 300,
             top_p: 1.0,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,
@@ -35,15 +35,14 @@ function Task() {
         setResult(response.data.choices[0].text)
         console.log(response)
         console.log(object)
-        console.log(input)
         setloading(false)
-        console.log(result)
+
 
 
     }
+    console.log(result)
 
-
-    //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
+    //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
 
 
 
@@ -63,7 +62,19 @@ function Task() {
                 DO YOU STUFF!
             </button>
             <div className='result'>
-                <h3 className="result-text">{loading ? <>loading....</>:<>{result}</>}</h3>
+                <h3 className="result-text">{
+                    loading ? <>loading....
+                    </> : <div className='result-output'>
+                        {result.split("\n").map((item, key) => {
+                            return (
+                                <span className='result-text' key={key}>
+                                    {item}
+                                    <br />
+                                </span>
+                            );
+                        })}</div>}
+
+                </h3>
             </div>
         </div>
     )
