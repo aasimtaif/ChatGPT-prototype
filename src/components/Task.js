@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import { useParams } from "react-router-dom"
 import { arrayItems as optionArray } from '../AiOptions'
 import '../App.css';
+import { ProgressBar} from  'react-loader-spinner'
 const { Configuration, OpenAIApi } = require("openai");
 
 function Task() {
 
     const [input, setInput] = useState();
-    const [result, setResult] = useState("");
+    const [result, setResult] = useState();
     const [loading, setloading] = useState()
 
     const { id } = useParams()
     // console.log(optionArray[id])
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
     const openai = new OpenAIApi(configuration);
 
@@ -24,7 +25,7 @@ function Task() {
             model: "text-davinci-003",
             prompt: `${optionArray[id].description} ${input}.`,
             temperature: 0,
-            max_tokens: 300,
+            max_tokens: 500,
             top_p: 1.0,
             frequency_penalty: 0.0,
             presence_penalty: 0.0,
@@ -63,9 +64,17 @@ function Task() {
             </button>
             <div className='result'>
                 <h3 className="result-text">{
-                    loading ? <>loading....
+                    loading ? <><ProgressBar
+                    height="100"
+                    width="100"
+                    ariaLabel="progress-bar-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="progress-bar-wrapper"
+                    borderColor = '#F4442E'
+                    barColor = '#51E5FF'
+                  />
                     </> : <div className='result-output'>
-                        {result.split("\n").map((item, key) => {
+                        {result?.split("\n")?.map((item, key) => {
                             return (
                                 <span className='result-text' key={key}>
                                     {item}

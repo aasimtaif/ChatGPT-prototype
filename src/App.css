@@ -65,6 +65,9 @@
   font-size: 10px;
   line-height: 2.5rem;
 }
+.result{
+  width:auto;
+}
 .result-output{
 
   background-color: aliceblue;
